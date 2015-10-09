@@ -57,7 +57,7 @@ class Network(sizes: Array[Int], cost: Cost) {
       println(s"Cost on training: ${totalCost(trainData, lambda)}")
       println(s"Cost on testing: ${totalCost(testData, lambda)}")
       println(s"Accuracy on training: ${accuracy(trainData)} / ${trainData.length}")
-      println(s"Accuracy on training: ${accuracy(testData)} / ${testData.length}")
+      println(s"Accuracy on testing: ${accuracy(testData)} / ${testData.length}")
       println
     }
   }
