@@ -42,7 +42,7 @@ object DataReader {
     } {
       // data stored as unsigned bytes
       // but scala bytes are signed
-      images(i)(r)(c) = bb.get() & 0xFE
+      images(i)(r)(c) = bb.get() & 0xFF
     }
     images
   }
