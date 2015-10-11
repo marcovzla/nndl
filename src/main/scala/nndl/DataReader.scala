@@ -27,11 +27,7 @@ object DataReader {
   }
 
   def readImages(path: String): Array[Array[Array[Int]]] = {
-    val file = new File(path)
-    val in = new GZIPInputStream(new FileInputStream(file))
-    val array: Array[Byte] = IOUtils.toByteArray(in)
-    in.close()
-    val bb = ByteBuffer.wrap(array)
+    val bb = readBytes(path)
     require(bb.getInt() == 2051, "wrong magic number")
     val numImages = bb.getInt()
     val numRows = bb.getInt()
@@ -50,11 +46,7 @@ object DataReader {
   }
 
   def readLabels(path: String): Array[Int] = {
-    val file = new File(path)
-    val in = new GZIPInputStream(new FileInputStream(file))
-    val array = IOUtils.toByteArray(in)
-    in.close()
-    val bb = ByteBuffer.wrap(array)
+    val bb = readBytes(path)
     require(bb.getInt() == 2049, "wrong magic number")
     val numLabels = bb.getInt()
     val labels = Array.ofDim[Int](numLabels)
@@ -62,6 +54,14 @@ object DataReader {
       labels(i) = bb.get()
     }
     labels
+  }
+
+  def readBytes(path: String): ByteBuffer = {
+    val file = new File(path)
+    val in = new GZIPInputStream(new FileInputStream(file))
+    val array = IOUtils.toByteArray(in)
+    in.close()
+    ByteBuffer.wrap(array)
   }
 
 }
