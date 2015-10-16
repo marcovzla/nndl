@@ -32,16 +32,8 @@ object DataReader {
     val numImages = bb.getInt()
     val numRows = bb.getInt()
     val numCols = bb.getInt()
-    val images = Array.ofDim[Int](numImages, numRows, numCols)
-    for {
-      i <- 0 until numImages
-      r <- 0 until numRows
-      c <- 0 until numCols
-    } {
-      // data stored as unsigned bytes
-      // but scala bytes are signed
-      images(i)(r)(c) = bb.get() & 0xFF
-    }
+    // data stored as unsigned bytes but scala bytes are signed
+    val images = Array.fill[Int](numImages, numRows, numCols)(bb.get() & 0xFF)
     images
   }
 
@@ -49,10 +41,7 @@ object DataReader {
     val bb = readBytes(path)
     require(bb.getInt() == 2049, "wrong magic number")
     val numLabels = bb.getInt()
-    val labels = Array.ofDim[Int](numLabels)
-    for (i <- 0 until numLabels) {
-      labels(i) = bb.get()
-    }
+    val labels = Array.fill[Int](numLabels)(bb.get())
     labels
   }
 
