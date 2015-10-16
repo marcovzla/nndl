@@ -14,21 +14,13 @@ class Network(sizes: Array[Int], cost: Cost) {
   // NOTE input neurons have no biases
   val biases: Array[DVec] = {
     for (s <- sizes.drop(1)) yield {
-      val a = Array.ofDim[Double](s)
-      for (i <- 0 until s) a(i) = dist.draw()
-      DenseVector(a)
+      DenseVector.fill[Double](s)(dist.draw())
     }
   }
 
   val weights: Array[DMat] = {
     for ((x, y) <- sizes zip sizes.drop(1)) yield {
-      val mat = DenseMatrix.zeros[Double](y, x)
-      for {
-        i <- 0 until y
-        j <- 0 until x
-      } mat(i, j) = dist.draw()
-      mat /= sqrt(x)
-      mat
+      DenseMatrix.fill[Double](y, x)(dist.draw()) / sqrt(x)
     }
   }
 
