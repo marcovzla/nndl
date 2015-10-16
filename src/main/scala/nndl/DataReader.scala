@@ -23,7 +23,7 @@ object DataReader {
     val numCols = images(0)(0).length
     // pixels in the dataset have values from 0 to 255
     // but we need them to be between 0 and 1 for our neural network
-    images.map(im => new DenseVector(im.flatten.map(_.toDouble)) / 255.0)
+    images.map(im => new DenseVector(im.flatten.map(_ / 255.0)))
   }
 
   def readImages(path: String): Array[Array[Array[Int]]] = {
