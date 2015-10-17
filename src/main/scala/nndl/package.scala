@@ -18,11 +18,11 @@ package object nndl {
   }
 
   /** replaces nan with zero and infinity with finite numbers */
-  def nanToNum(v: DVec): DVec = v map { e =>
-    if (e.isNaN) 0.0
-    else if (e == Double.NegativeInfinity) Double.MinValue
-    else if (e == Double.PositiveInfinity) Double.MaxValue
-    else e
+  def nanToNum(v: DVec): DVec = v map {
+    case Double.NegativeInfinity => Double.MinValue
+    case Double.PositiveInfinity => Double.MaxValue
+    case x if x.isNaN => 0.0
+    case x => x
   }
 
 }
