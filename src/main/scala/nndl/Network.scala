@@ -12,17 +12,10 @@ class Network(sizes: Array[Int], cost: Cost) {
   val dist = new Gaussian(0, 1)
 
   // NOTE input neurons have no biases
-  val biases: Array[DVec] = {
-    for (s <- sizes.drop(1)) yield {
-      DenseVector.fill[Double](s)(dist.draw())
-    }
-  }
+  val biases: Array[DVec] = for (s <- sizes.drop(1)) yield DenseVector.rand(s, dist)
 
-  val weights: Array[DMat] = {
-    for ((x, y) <- sizes zip sizes.drop(1)) yield {
-      DenseMatrix.fill[Double](y, x)(dist.draw()) / sqrt(x)
-    }
-  }
+  val weights: Array[DMat] =
+    for ((in, out) <- sizes zip sizes.drop(1)) yield DenseMatrix.rand(out, in, dist) / sqrt(in)
 
   def feedForward(input: DVec): DVec = {
     var a = input
