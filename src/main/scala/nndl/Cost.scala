@@ -14,6 +14,6 @@ object QuadraticCost extends Cost {
 }
 
 object CrossEntropyCost extends Cost {
-  def apply(a: DVec, y: DVec): Double = sum(nanToNum((-y :* log(a)) - ((-y+1.0) :* log(-a+1.0))))
+  def apply(a: DVec, y: DVec): Double = sum(nanToNum((-y :* log(a)) - ((1.0 - y) :* log(1.0 - a))))
   def delta(z: DVec, a: DVec, y: DVec): DVec = a - y
 }
