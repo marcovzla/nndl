@@ -7,7 +7,7 @@ package object nndl {
   type DMat = DenseMatrix[Double]
 
   /** sigmoid derivative */
-  def sigmoidPrime(z: DVec): DVec = sigmoid(z) :* (-sigmoid(z) + 1.0)
+  def sigmoidPrime(z: DVec): DVec = sigmoid(z) :* (1.0 - sigmoid(z))
 
   /** gets a digit and returns a one-hot vector */
   def vectorizeDigit(d: Int): DVec = {
