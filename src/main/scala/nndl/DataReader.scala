@@ -26,16 +26,14 @@ object DataReader {
     val numRows = bb.getInt()
     val numCols = bb.getInt()
     // data stored as unsigned bytes but scala bytes are signed
-    val images = Array.fill[Int](numImgs, numRows, numCols)(bb.get() & 0xFF)
-    images
+    Array.fill[Int](numImgs, numRows, numCols)(bb.get() & 0xFF)
   }
 
   def readLabels(path: String): Array[Int] = {
     val bb = readBytes(path)
     require(bb.getInt() == 2049, "wrong magic number")
     val numLabels = bb.getInt()
-    val labels = Array.fill[Int](numLabels)(bb.get())
-    labels
+    Array.fill[Int](numLabels)(bb.get())
   }
 
   def readBytes(path: String): ByteBuffer = {
