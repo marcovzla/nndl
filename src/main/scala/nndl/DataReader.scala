@@ -22,11 +22,11 @@ object DataReader {
   def readImages(path: String): Array[Array[Array[Int]]] = {
     val bb = readBytes(path)
     require(bb.getInt() == 2051, "wrong magic number")
-    val numImages = bb.getInt()
+    val numImgs = bb.getInt()
     val numRows = bb.getInt()
     val numCols = bb.getInt()
     // data stored as unsigned bytes but scala bytes are signed
-    val images = Array.fill[Int](numImages, numRows, numCols)(bb.get() & 0xFF)
+    val images = Array.fill[Int](numImgs, numRows, numCols)(bb.get() & 0xFF)
     images
   }
 
