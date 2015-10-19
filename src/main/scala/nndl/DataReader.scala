@@ -16,15 +16,8 @@ object DataReader {
   def readLabelsDVec(path: String): Array[DVec] =
     readLabels(path) map vectorizeDigit
 
-  def readImagesDVec(path: String): Array[DVec] = {
-    val images = readImages(path)
-    val numImages = images.length
-    val numRows = images(0).length
-    val numCols = images(0)(0).length
-    // pixels in the dataset have values from 0 to 255
-    // but we need them to be between 0 and 1 for our neural network
-    images.map(im => new DenseVector(im.flatten.map(_ / 255.0)))
-  }
+  def readImagesDVec(path: String): Array[DVec] =
+    readImages(path) map (im => new DenseVector(im.flatten.map(_ / 255.0)))
 
   def readImages(path: String): Array[Array[Array[Int]]] = {
     val bb = readBytes(path)
