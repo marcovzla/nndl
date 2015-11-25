@@ -93,8 +93,7 @@ class Network(sizes: Array[Int], cost: Cost) {
     gradWeights(sz - 1) = delta * as(as.length - 2).t
     for (l <- 2 until numLayers) {
       val z = zs(sz - l)
-      val sp = sigmoidPrime(z)
-      delta = (weights(sz - l + 1).t * delta) :* sp
+      delta = (weights(sz - l + 1).t * delta) :* sigmoidPrime(z)
       gradBiases(sz - l) = delta
       gradWeights(sz - l) = delta * as(as.length - l - 1).t
     }
